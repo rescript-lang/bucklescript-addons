@@ -39,21 +39,21 @@ let create_server  http =
 
 type req 
 
-type resp =  <
+type resp =  [%bs.obj:<
    statusCode_set : int -> unit  ;
    setHeader : string * string -> unit ;
    end_ : string ->  unit 
-> [@bs.obj] 
+> ]
 
-type server =  <
+type server =  [%bs.obj:<
    listen : int * string *  (unit -> unit) -> unit 
-> [@bs.obj] 
+> ]
 
 
 
-type http = <
+type http = [%bs.obj:<
    createServer : (req  * resp  -> unit ) ->  server
-> [@bs.obj] 
+> ]
 
 
 external http : http  = "http"  [@@bs.val_of_module ]
