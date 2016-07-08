@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "reason": "git+https://github.com/facebook/reason.git"
+  },
+  "dependencies": {
+    "bs-platform": "^0.7.1"
+  },
+    "scripts" : {
+        "build" : "source dependencyEnv && bsc -pp ./node_modules/reason/refmt_impl.native -impl hello.re" 
+    },
+    "name" : "test"
+}
