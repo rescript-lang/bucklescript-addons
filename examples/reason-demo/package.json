@@ -7,6 +7,6 @@
   },
     "scripts" : {
         "build" : "source dependencyEnv && bsc -pp ./node_modules/reason/refmt_impl.native -impl hello.re" 
-    },
-    "name" : "test"
+    }
+    , "name" : "test"
 }

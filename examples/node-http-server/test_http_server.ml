@@ -22,41 +22,45 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
-[@@@bs.config{non_export = true; obj_type_auto_uncurry = true}]
-
-let port = 3000
-let hostname = "127.0.0.1"
-let create_server  http = 
-  let server = http##createServer (fun [@uncurry]  (req,  resp)  -> 
-      resp##statusCode_set 200;
-      resp##setHeader("Content-Type", "text/plain");
-      resp##end_ "Hello world\n"
-    )
-  in
-  server##listen(port, hostname,  fun [@uncurry] () -> 
-      Js.log ("Server running at http://"^ hostname ^ ":" ^ string_of_int port ^ "/")
-    ) 
+[@@@bs.config{no_export; bs_class_type}]
 
 type req 
 
-type resp =  [%bs.obj:<
-   statusCode_set : int -> unit  ;
-   setHeader : string * string -> unit ;
-   end_ : string ->  unit 
-> ]
+class type _resp = object 
+  method statusCode : int [@@bs.set]
+  method setHeader : string -> string -> unit 
+  method _end : string -> unit 
+end 
 
-type server =  [%bs.obj:<
-   listen : int * string *  (unit -> unit) -> unit 
-> ]
+type resp = _resp Js.t 
 
+class type _server = object 
+  method listen : int -> string -> (unit -> unit [@bs]) -> unit 
+end 
+type server = _server Js.t 
 
+class type _http  = object 
+  method createServer : (req  ->  resp  -> unit [@bs] ) ->  server
+end 
 
-type http = [%bs.obj:<
-   createServer : (req  * resp  -> unit ) ->  server
-> ]
+type http = _http Js.t 
 
 
 external http : http  = "http"  [@@bs.val_of_module ]
+
+
+let port = 3000
+let hostname = "127.0.0.1"
+let create_server  (http : http) = 
+  let server = http##createServer begin fun [@bs] req  resp  -> 
+      resp##statusCode #= 200;
+      resp##setHeader "Content-Type" "text/plain";
+      resp##_end "Hello world\n"
+    end
+  in
+  server##listen port hostname  begin fun [@bs] () -> 
+    Js.log ("Server running at http://"^ hostname ^ ":" ^ string_of_int port ^ "/")
+  end 
 
 
 let () = 
