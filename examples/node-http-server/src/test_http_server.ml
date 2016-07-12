@@ -33,7 +33,7 @@ let create_server http  =
     end
   in
   server##listen port hostname  begin fun [@bs] () -> 
-    Js.log ("Server running at http://"^ hostname ^ ":" ^ string_of_int port ^ "/")
+    Js.log ("Server running at http://"^ hostname ^ ":" ^ Pervasives.string_of_int port ^ "/")
   end 
 
 
