@@ -1,29 +1,27 @@
 {
-    "name": "bs-mocha",
-    "version": "0.1.0",
-    "description": "A minimal binding to mochajs for bucklescript",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/bloomberg/bucklescript-addons.git"
-    },
-    "keywords": [
-        "ocaml",
-        "bucklescript",
-        "map"
-    ],
-    "scripts" : {
-        "postinstall" : "./scripts/install.sh"
-    },
-    "author": "Hongbo Zhang",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/bloomberg/bucklescript-addons/issues"
-    },
-    "homepage": "https://github.com/bloomberg/bucklescript-addons#readme",
-    "dependencies": {
-        "bs-platform": "^0.8.0"
-    }
+  "name": "bs-mocha",
+  "version": "0.1.1",
+  "description": "A minimal binding to mochajs for bucklescript",
+  "scripts": {
+    "postinstall": "./scripts/install.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bloomberg/bucklescript-addons.git"
+  },
+  "keywords": [
+    "ocaml",
+    "bucklescript",
+    "map"
+  ],
+  "author": "Hongbo Zhang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bloomberg/bucklescript-addons/issues"
+  },
+  "homepage": "https://github.com/bloomberg/bucklescript-addons#readme",
+  "dependencies": {
+    "bs-platform": "^0.8.0",
+    "mocha": "^2.5.3"
+  }
 }
