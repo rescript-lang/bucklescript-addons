@@ -22,26 +22,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
+(** A simple binding to node [http] module *)
+type req 
 
-let port = 3000
-let hostname = "127.0.0.1"
-let create_server  (http : Http_types.http) = 
-  let server = http##createServer begin fun [@bs] req  resp  -> 
-      resp##statusCode #= 200;
-      resp##setHeader "Content-Type" "text/plain";
-      resp##_end "Hello world\n"
-    end
-  in
-  server##listen port hostname  begin fun [@bs] () -> 
-    Js.log ("Server running at http://"^ hostname ^ ":" ^ string_of_int port ^ "/")
-  end 
+class type _resp = object 
+  method statusCode : int [@@bs.set]
+  method setHeader : string -> string -> unit 
+  method _end : string -> unit 
+end [@bs]
+
+type resp = _resp Js.t 
+
+class type _server = object 
+  method listen : int -> string -> (unit -> unit [@bs]) -> unit 
+end [@bs]
+type server = _server Js.t 
+
+class type _http  = object 
+  method createServer : (req  ->  resp  -> unit [@bs] ) ->  server
+end [@bs]
+
+type http = _http Js.t 
 
 
-let () = 
-  create_server Http_types.http
-
-
-
-(* local variables: *)
-(* compile-command: "./node_modules/bs-platform/bin/bsc -c test_http_server.ml" *)
-(* end: *)
+external http : http  = "http"  [@@bs.val_of_module ]
