@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
-[@@@bs.config{no_export; bs_class_type}]
+
 
 type req 
 
@@ -30,18 +30,18 @@ class type _resp = object
   method statusCode : int [@@bs.set]
   method setHeader : string -> string -> unit 
   method _end : string -> unit 
-end 
+end [@bs]
 
 type resp = _resp Js.t 
 
 class type _server = object 
   method listen : int -> string -> (unit -> unit [@bs]) -> unit 
-end 
+end [@bs]
 type server = _server Js.t 
 
 class type _http  = object 
   method createServer : (req  ->  resp  -> unit [@bs] ) ->  server
-end 
+end [@bs]
 
 type http = _http Js.t 
 

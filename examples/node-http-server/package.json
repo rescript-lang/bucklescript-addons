@@ -1,8 +1,8 @@
 {
     "devDependencies": {
-        "bs-platform": "0.7.1"
+        "bs-platform": "^0.8.0"
     },
     "scripts" : {
-        "build" : "bsc -c test_http_server.ml"
+        "build" : "bsc -I src -c -bs-files src/*.mli src/*.ml "
     }
 }
