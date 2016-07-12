@@ -3,3 +3,4 @@ node_modules
 *.annot
 *.cmi
 *.cmj
+*.log

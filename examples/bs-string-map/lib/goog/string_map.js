@@ -1,9 +1,10 @@
 // GENERATED CODE BY BUCKLESCRIPT VERSION 0.7.1 , PLEASE EDIT WITH CARE
 'use strict';
+goog.module("bs-string-map.string_map");
 
-var Caml_builtin_exceptions = require("bs-platform/lib/js/caml_builtin_exceptions");
-var Pervasives              = require("bs-platform/lib/js/pervasives");
-var $$String                = require("bs-platform/lib/js/string");
+var Caml_builtin_exceptions = goog.require("bs-platform.caml_builtin_exceptions");
+var Pervasives              = goog.require("bs-platform.pervasives");
+var $$String                = goog.require("bs-platform.string");
 
 function height(param) {
   if (param) {

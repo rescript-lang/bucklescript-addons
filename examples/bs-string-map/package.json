@@ -24,6 +24,6 @@
     },
     "homepage": "https://github.com/bloomberg/bucklescript-addons#readme",
     "dependencies": {
-        "bs-platform": "^0.5.5"
+        "bs-platform": "^0.8.0"
     }
 }
