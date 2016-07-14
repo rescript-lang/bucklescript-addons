@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "A minimal binding to mochajs for bucklescript",
   "scripts": {
-    "postinstall": "./scripts/install.sh"
+    "postinstall": "node ./scripts/install.js",
+    "test" : "bsc -I src -bs-package-include bs-mocha -I test -bs-files test/*.ml && mocha test/*.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,10 @@
   },
   "homepage": "https://github.com/bloomberg/bucklescript-addons#readme",
   "dependencies": {
-    "bs-platform": "0.8.1",
+    "bs-mocha": "^0.1.4",
+    "bs-platform": "0.8.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.5.3"
   }
 }
