@@ -22,30 +22,5 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
-
-(* https://github.com/typed-typings/env-node/blob/master/4/node.d.ts#L1018 *)
-
-type readline_options
-type readable_stream 
-type writable_stream
-
-external from_options : 
-  input:readable_stream ->
-  output:writable_stream ->
-  terminal:Js.boolean -> unit -> readline_options = "" [@@bs.obj]
-
-external createInterface : readline_options -> readline = 
-  "createInterface"[@@bs.call] [@@bs.module "readline"]
-
-(**
- see typescript 
-   {[
-     interface EventEmitter {
-       on (event : string, listen : Function)
-     }
-   ]}
-   This is weakly typed, the sub
-   https://github.com/typed-typings/env-node/blob/master/4/node.d.ts#L296
-*)
-
-(* external on_line : string -> (string ) *)
+type readable 
+type writable 
