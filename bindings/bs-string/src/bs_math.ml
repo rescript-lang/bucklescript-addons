@@ -22,42 +22,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
-[@@@bs.config{no_export}]
 
-let first_line = ref true 
-
-let rl = Bs_readline.createInterface 
-    (Bs_readline.from_options 
-       ~input:Bs_process.stdin
-       ~output:Bs_process.stdout 
-       ~terminal:Js.false_ ())
-
-
-
-let process str = 
-  let digits = 
-    Bs_array.map (Bs_string.ascii_explode str)
-      (fun[@bs] x -> Bs_string.charCodeAt x 0 - Bs_string.charCodeAt "0" 0)
-  in 
-  Bs_array.reduce digits (fun[@bs] acc a -> Bs_math.max_int acc a ) 1 
-
-let () = 
-  Bs_readline.on_line rl begin fun [@bs] line -> 
-    Js.log @@process line;
-  end
-
-(*
-let () = 
-  Bs_readline.on_line rl begin fun [@bs] line -> 
-      if !first_line then 
-        first_line:= false 
-      else
-        begin 
-          Js.log line;
-          Js.log 42
-        end
-  end;
-  Bs_readline.on_close rl begin fun[@bs] () -> 
-    Bs_process.exit 0 
-  end
-*)
+external max_int : int -> int -> int = "Math.max" [@@bs.call]
+external max_float : float -> float -> float = "Math.max" [@@bs.call]

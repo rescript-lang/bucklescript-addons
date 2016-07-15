@@ -22,19 +22,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
+type t = Js_string.t 
 
 external slice : 
-  Js_string.t ->  int  -> Js_string.t = 
+  t ->  int  -> t = 
   "slice" [@@bs.send]
 
 external slice_until : 
-  Js_string.t ->  int  -> int -> Js_string.t = 
+  t ->  int  -> int -> t = 
   "slice" [@@bs.send]
 
 external split : 
-  Js_string.t -> Js_re.t -> Js_string.t Js_array.t = 
+  t -> Js_re.t -> t Js_array.t = 
   "split" [@@bs.send]
 
 external split_limit : 
-  Js_string.t -> Js_re.t -> int -> Js_string.t Js_array.t = 
+  t -> Js_re.t -> int -> t Js_array.t = 
   "split" [@@bs.send]
+
+external split_by_string : 
+  t -> t -> t Js_array.t = 
+  "split" [@@bs.send]
+
+
+let ascii_explode s = split_by_string s ""
+
+external charCodeAt : t -> int -> int = 
+  "charCodeAt" [@@bs.send]

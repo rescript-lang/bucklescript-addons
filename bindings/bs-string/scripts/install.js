@@ -23,7 +23,7 @@ var command =
   "-I " + src_dir + 
   " -c -bs-files " +
   files.join(" ")
-
+console.log("command", command);
 child_process.execSync(command);
 
 

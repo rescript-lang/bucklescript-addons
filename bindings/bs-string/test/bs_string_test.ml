@@ -26,7 +26,8 @@ let ()  =
          "lazy";
          "dog.";
          "" |]
-      )
+      );
+    eq __LOC__ ([|"a";"b"; "c"; ";"; "d"|], Bs_string.ascii_explode "abc;d")
   end
 
  

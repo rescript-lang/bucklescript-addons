@@ -4,6 +4,7 @@
 var Pervasives = require("bs-platform/lib/js/pervasives");
 var Bs_mocha   = require("bs-mocha/lib/js/bs_mocha");
 var Block      = require("bs-platform/lib/js/block");
+var Bs_string  = require("../lib/js/bs_string");
 
 var suites = [/* [] */0];
 
@@ -48,6 +49,17 @@ eq('File "test/bs_string_test.ml", line 15, characters 7-14', /* tuple */[
         "dog.",
         ""
       ]
+    ]);
+
+eq('File "test/bs_string_test.ml", line 30, characters 7-14', /* tuple */[
+      /* array */[
+        "a",
+        "b",
+        "c",
+        ";",
+        "d"
+      ],
+      Bs_string.ascii_explode("abc;d")
     ]);
 
 Bs_mocha.from_pair_suites("test/bs_string_test.ml", suites[0]);

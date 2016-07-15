@@ -4,7 +4,7 @@
   "description": "A minimal binding to mochajs for bucklescript",
   "scripts": {
     "postinstall": "node ./scripts/install.js",
-    "test" : "bsc -I src -bs-package-include bs-mocha -I test -bs-files test/*.ml && mocha test/*.js"
+    "test" : "bsc -bs-package-name $npm_package_name -I src -bs-package-include bs-mocha -I test -bs-files test/*.ml && mocha test/*.js"
   },
   "repository": {
     "type": "git",
