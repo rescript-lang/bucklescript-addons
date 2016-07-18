@@ -57,12 +57,3 @@ since it's only one option, the inferred type would be
 ]}
 
 *)
-external on_line : t ->  string -> (string -> unit [@bs]) -> unit = 
-"on"[@@bs.send]
-
-let on_line rl cb = on_line rl  "line" cb 
-
-external on_close : t -> string -> (unit -> unit [@bs] ) -> unit = 
-  "on" [@@bs.send]
-
-let on_close rl cb = on_close rl "close" cb

@@ -23,4 +23,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
 type readable 
-type writable 
+
+type writable = [%bs.obj: < 
+       write : Bs_string.t -> Js.boolean [@bs.meth]
+> ]

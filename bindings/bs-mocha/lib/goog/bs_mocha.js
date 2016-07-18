@@ -1,9 +1,9 @@
-// GENERATED CODE BY BUCKLESCRIPT VERSION 0.7.1 , PLEASE EDIT WITH CARE
+// GENERATED CODE BY BUCKLESCRIPT VERSION 0.8.3 , PLEASE EDIT WITH CARE
 'use strict';
 goog.module("bs-mocha.bs_mocha");
 
-var Caml_builtin_exceptions = goog.require("bs-platform.caml_builtin_exceptions");
 var Assert                  = goog.require("assert");
+var Caml_builtin_exceptions = goog.require("bs-platform.caml_builtin_exceptions");
 var List                    = goog.require("bs-platform.list");
 
 function from_suites(name, suite) {

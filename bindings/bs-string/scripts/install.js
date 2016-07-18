@@ -4,9 +4,24 @@
 
 var fs = require('fs')
 var child_process = require('child_process')
-var process = require('process')
+var process = global.process
 var path = require('path')
 var src_dir = "src"
+
+
+if (!String.prototype.endsWith) {
+  String.prototype.endsWith = function(searchString, position) {
+      var subjectString = this.toString();
+      if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
+        position = subjectString.length;
+      }
+      position -= searchString.length;
+      var lastIndex = subjectString.indexOf(searchString, position);
+      return lastIndex !== -1 && lastIndex === position;
+  };
+}
+// TODO: to work with 0.12
+// polyfil endswith
 var files = 
 fs
 .readdirSync('./src')

@@ -1,7 +1,7 @@
-// GENERATED CODE BY BUCKLESCRIPT VERSION 0.7.1 , PLEASE EDIT WITH CARE
+// GENERATED CODE BY BUCKLESCRIPT VERSION 0.8.3 , PLEASE EDIT WITH CARE
 'use strict';
-define(["exports", "bs-platform/lib/amdjs/caml_builtin_exceptions", "assert", "bs-platform/lib/amdjs/list"],
-  function(exports, Caml_builtin_exceptions, Assert, List){
+define(["exports", "assert", "bs-platform/lib/amdjs/caml_builtin_exceptions", "bs-platform/lib/amdjs/list"],
+  function(exports, Assert, Caml_builtin_exceptions, List){
     'use strict';
     function from_suites(name, suite) {
       describe(name, function () {

@@ -45,6 +45,8 @@ external split_by_string :
   "split" [@@bs.send]
 
 
+external of_any : 'a -> t = "js_anything_to_string"
+
 let ascii_explode s = split_by_string s ""
 
 external charCodeAt : t -> int -> int = 

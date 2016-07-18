@@ -29,3 +29,5 @@ external map : 'a t ->  ('a -> 'b [@bs]) -> 'b t =
 
 external reduce : 'a t -> ('acc -> 'a -> 'acc [@bs]) -> 'acc -> 'acc = 
   "reduce" [@@bs.send]
+
+external push : 'a t -> 'a -> int = "push" [@@bs.send]

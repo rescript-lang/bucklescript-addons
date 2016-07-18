@@ -28,22 +28,47 @@ let first_line = ref true
 
 let rl = Bs_readline.createInterface 
     (Bs_readline.from_options 
-       ~input:Bs_process.stdin
-       ~output:Bs_process.stdout 
+       ~input:Bs_process.process##stdin
+       ~output:Bs_process.process##stdout
        ~terminal:Js.false_ ())
 
 
+external on_line : Bs_readline.t ->  string -> (string -> unit [@bs]) -> unit = "on"[@@bs.send]
+external on_close : Bs_readline.t -> string -> (unit -> unit [@bs] ) -> unit = "on" [@@bs.send]
+let on_line rl cb = on_line rl  "line" cb 
+let on_close rl cb = on_close rl "close" cb
 
+let a_char_code = Char.code 'A'
+let zero_char_code = Char.code '0'
 let process str = 
   let digits = 
-    Bs_array.map (Bs_string.ascii_explode str)
-      (fun[@bs] x -> Bs_string.charCodeAt x 0 - Bs_string.charCodeAt "0" 0)
+    Bs_array.map (Bs_string.split_by_string str "")
+      (fun[@bs] x -> 
+         let v = Bs_string.charCodeAt x 0 in 
+         if v >= a_char_code then v - a_char_code + 10 + 1
+         else 
+           v - zero_char_code + 1 )
   in 
   Bs_array.reduce digits (fun[@bs] acc a -> Bs_math.max_int acc a ) 1 
 
+let lines : string Bs_array.t = [||]
+
+let process_lines lines = 
+  match lines with 
+  | [| firstline; secondline|]
+    -> let a , b = process firstline , process secondline in 
+    let first = (Bs_nativeint.parseInt firstline a) in
+    let second = ( Bs_nativeint.parseInt secondline b) in
+    (* Js.log (first, second) *)
+    (* Js.log ( Nativeint.add first second   ) *)
+    ignore (Bs_process.process##stdout##write (Bs_string.of_any ( Nativeint.add first second   )))
+  | _ ->  assert false 
 let () = 
-  Bs_readline.on_line rl begin fun [@bs] line -> 
-    Js.log @@process line;
+  on_line rl begin fun [@bs] line -> 
+    ignore (Bs_array.push lines line)
+  end;
+  on_close rl begin fun [@bs] () -> 
+    process_lines lines
   end
 
 (*
@@ -61,3 +86,7 @@ let () =
     Bs_process.exit 0 
   end
 *)
+
+(* local variables: *)
+(* compile-command: "npm --no-color run build" *)
+(* end: *)
