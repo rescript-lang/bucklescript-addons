@@ -1,0 +1,28 @@
+{
+  "name": "bs-promise",
+  "version": "0.1.0",
+  "description": "Bindings to promises for BuckleScript",
+  "scripts": {
+    "postinstall": "node ./scripts/install.js",
+    "test": "node ./scripts/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bloomberg/bucklescript-addons.git"
+  },
+  "keywords": [
+    "ocaml",
+    "bucklescript",
+    "promise",
+    "promises"
+  ],
+  "author": "Abhir Mathur",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bloomberg/bucklescript-addons/issues"
+  },
+  "homepage": "https://github.com/bloomberg/bucklescript-addons#readme",
+  "dependencies": {
+    "bs-platform" : ">=0.8.7"
+  }
+}
