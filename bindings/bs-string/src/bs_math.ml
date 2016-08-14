@@ -23,5 +23,5 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
 
-external max_int : int -> int -> int = "Math.max" [@@bs.call]
-external max_float : float -> float -> float = "Math.max" [@@bs.call]
+external max_int : int -> int -> int = "Math.max" [@@bs.val]
+external max_float : float -> float -> float = "Math.max" [@@bs.val]
