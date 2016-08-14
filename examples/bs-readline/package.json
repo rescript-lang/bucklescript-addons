@@ -1,6 +1,6 @@
 {
   "name": "bs-readline-example",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Example for using bucklescript do nodejs io",
   "scripts": {
       "build": "bsc -annot -bs-no-any-assert -bs-package-include bs-string -c -I src  -bs-files src/*.ml"
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/bloomberg/bucklescript-addons#readme",
   "dependencies": {
-    "bs-platform" : "0.8.2",
-    "bs-string" : "0.1.0"
+    "bs-platform" : "0.9.3",
+    "bs-string" : "0.1.1"
   }
 }
