@@ -1,7 +1,7 @@
-// GENERATED CODE BY BUCKLESCRIPT VERSION 0.8.3 , PLEASE EDIT WITH CARE
+// GENERATED CODE BY BUCKLESCRIPT VERSION 0.9.3 , PLEASE EDIT WITH CARE
 'use strict';
-define(["exports", "assert", "bs-platform/lib/amdjs/caml_builtin_exceptions", "bs-platform/lib/amdjs/list"],
-  function(exports, Assert, Caml_builtin_exceptions, List){
+define(["exports", "bs-platform/lib/amdjs/caml_builtin_exceptions", "bs-platform/lib/amdjs/list", "assert"],
+  function(exports, Caml_builtin_exceptions, List, Assert){
     'use strict';
     function from_suites(name, suite) {
       describe(name, function () {
@@ -39,7 +39,7 @@ define(["exports", "assert", "bs-platform/lib/amdjs/caml_builtin_exceptions", "b
                                             Caml_builtin_exceptions.assert_failure,
                                             [
                                               "src/bs_mocha.ml",
-                                              81,
+                                              78,
                                               16
                                             ]
                                           ];

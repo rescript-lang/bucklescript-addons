@@ -1,4 +1,4 @@
-// GENERATED CODE BY BUCKLESCRIPT VERSION 0.8.3 , PLEASE EDIT WITH CARE
+// GENERATED CODE BY BUCKLESCRIPT VERSION 0.9.3 , PLEASE EDIT WITH CARE
 'use strict';
 
 var Readline = require("readline");
@@ -9,18 +9,14 @@ var rl = Readline.createInterface({
       terminal: false
     });
 
-var a_char_code = /* "A" */65;
-
-var zero_char_code = /* "0" */48;
-
 function process(str) {
   var digits = str.split("").map(function (x) {
         var v = x.charCodeAt(0);
-        if (v >= a_char_code) {
-          return ((v - a_char_code | 0) + 10 | 0) + 1 | 0;
+        if (v >= /* "A" */65) {
+          return ((v - /* "A" */65 | 0) + 10 | 0) + 1 | 0;
         }
         else {
-          return (v - zero_char_code | 0) + 1 | 0;
+          return (v - /* "0" */48 | 0) + 1 | 0;
         }
       });
   return digits.reduce(function (acc, a) {

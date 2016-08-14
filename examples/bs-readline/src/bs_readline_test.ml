@@ -33,10 +33,12 @@ let rl = Bs_readline.createInterface
        ~terminal:Js.false_ ())
 
 
-external on_line : Bs_readline.t ->  string -> (string -> unit [@bs]) -> unit = "on"[@@bs.send]
-external on_close : Bs_readline.t -> string -> (unit -> unit [@bs] ) -> unit = "on" [@@bs.send]
-let on_line rl cb = on_line rl  "line" cb 
-let on_close rl cb = on_close rl "close" cb
+external on : Bs_readline.t ->
+  ([
+    | `line of (string->unit [@bs])
+    | `close of (unit -> unit [@bs]) ] [@bs.string]) -> unit = "" [@@bs.send]
+
+    
 
 let a_char_code = Char.code 'A'
 let zero_char_code = Char.code '0'
@@ -63,13 +65,15 @@ let process_lines lines =
     (* Js.log ( Nativeint.add first second   ) *)
     ignore (Bs_process.process##stdout##write (Bs_string.of_any ( Nativeint.add first second   )))
   | _ ->  assert false 
+
+
 let () = 
-  on_line rl begin fun [@bs] line -> 
-    ignore (Bs_array.push lines line)
-  end;
-  on_close rl begin fun [@bs] () -> 
-    process_lines lines
-  end
+  on rl (`line (fun [@bs] line -> 
+      ignore (Bs_array.push lines line)
+    ));
+  on rl (`close (fun [@bs] () -> 
+      process_lines lines
+    ))
 
 (*
 let () = 

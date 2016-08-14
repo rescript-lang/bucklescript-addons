@@ -1,6 +1,6 @@
 {
   "name": "bs-string",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A minimal binding to mochajs for bucklescript",
   "scripts": {
     "postinstall": "node ./scripts/install.js",
@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/bloomberg/bucklescript-addons#readme",
   "dependencies": {
-    "bs-mocha": "^0.1.4",
-    "bs-platform": "0.8.3"
+    "bs-mocha": "0.1.5",
+    "bs-platform": "0.9.3"
   },
   "devDependencies": {
     "mocha": "^2.5.3"
