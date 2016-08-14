@@ -45,4 +45,4 @@ end [@bs]
 type http = _http Js.t 
 
 
-external http : http  = "http"  [@@bs.val_of_module ]
+external http : http  = ""  [@@bs.module]
