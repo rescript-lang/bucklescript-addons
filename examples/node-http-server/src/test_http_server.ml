@@ -43,5 +43,5 @@ let () =
 
 
 (* local variables: *)
-(* compile-command: "./node_modules/bs-platform/bin/bsc -c test_http_server.ml" *)
+(* compile-command: "npm run --no-color build" *)
 (* end: *)
