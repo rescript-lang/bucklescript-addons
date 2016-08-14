@@ -1,9 +1,9 @@
-// GENERATED CODE BY BUCKLESCRIPT VERSION 0.8.3 , PLEASE EDIT WITH CARE
+// GENERATED CODE BY BUCKLESCRIPT VERSION 0.9.3 , PLEASE EDIT WITH CARE
 'use strict';
 
-var Assert                  = require("assert");
 var Caml_builtin_exceptions = require("bs-platform/lib/js/caml_builtin_exceptions");
 var List                    = require("bs-platform/lib/js/list");
+var Assert                  = require("assert");
 
 function from_suites(name, suite) {
   describe(name, function () {
@@ -41,7 +41,7 @@ function from_pair_suites(name, suites) {
                                         Caml_builtin_exceptions.assert_failure,
                                         [
                                           "src/bs_mocha.ml",
-                                          81,
+                                          78,
                                           16
                                         ]
                                       ];

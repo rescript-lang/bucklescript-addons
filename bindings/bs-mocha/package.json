@@ -22,6 +22,6 @@
   "homepage": "https://github.com/bloomberg/bucklescript-addons#readme",
   "dependencies": {
     "mocha": "^2.5.3",
-    "bs-platform" : "0.8.2"
+    "bs-platform" : "0.9.3"
   }
 }

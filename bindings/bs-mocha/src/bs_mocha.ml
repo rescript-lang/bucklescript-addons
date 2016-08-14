@@ -26,27 +26,24 @@
 
 
 external describe : string -> (unit -> unit[@bs]) -> unit = 
-  "describe" [@@bs.call]
+  "" [@@bs.val]
 
 external it : string -> (unit -> unit [@bs]) -> unit = 
-  "it" [@@bs.call ]
+  "" [@@bs.val]
 
 external eq : 'a -> 'a -> unit = "deepEqual"
-    [@@bs.call ]
     [@@bs.module "assert"]
 
 external neq : 'a -> 'a -> unit = "notDeepEqual"
-    [@@bs.call ]
     [@@bs.module "assert"]
 
 
-
-external dump : 'a array -> unit = "console.log" 
-    [@@bs.call ] 
-    [@@bs.splice]
+(* external dump : 'a array -> unit = "console.log"  *)
+(*     [@@bs.val]  *)
+(*     [@@bs.splice] *)
 
 external throws : (unit -> unit [@bs]) 
-  -> unit = "throws" [@@bs.call] [@@bs.module "assert"]
+  -> unit = ""  [@@bs.module "assert"]
 
 let assert_equal = eq 
 let assert_notequal = neq
