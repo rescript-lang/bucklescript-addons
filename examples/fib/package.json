@@ -1,0 +1,8 @@
+{
+    "dependencies": {
+        "bs-platform": "0.9.4"
+    },
+    "scripts" : {
+        "build" : "bsc -c -bs-main main_entry.ml"
+    }
+}
