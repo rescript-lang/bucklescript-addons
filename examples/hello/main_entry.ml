@@ -1,3 +1,3 @@
 
 
-Js.log "hello world"
+print_endline "hello world"
