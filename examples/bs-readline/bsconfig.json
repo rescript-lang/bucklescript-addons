@@ -1,0 +1,17 @@
+{
+    "name" : "bs-readline",
+    "version": "0.1.2",
+    "ocaml-config": {
+        "sources": [
+            {"dir": "src",
+            "public":"all",
+            "files": [
+                "bs_process.ml", 
+                // TODO: sanity check, check if the file exist
+                "bs_readline_test.ml",
+                "bs_stream.ml"
+            ]
+            }
+        ]
+    }
+}

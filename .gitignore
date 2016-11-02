@@ -4,3 +4,11 @@ node_modules
 *.cmi
 *.cmj
 *.log
+*.d
+.bsbuild
+.bsdeps
+.ninja_deps
+.ninja_log
+*.mlast
+*.mliast
+build.ninja # we should not check in since it is OS dependent 

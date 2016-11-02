@@ -1,0 +1,26 @@
+{
+    "name": "bs-string",
+    "version": "0.1.2",    
+    "ocaml-config": {
+      //  "bs-dependencies": ["bs-mocha"],
+        "sources": [
+            {
+                "dir": "src",
+                "public" : "all",
+                "files": [
+                    "bs_string.ml",
+                    "bs_nativeint.ml",
+                    "bs_math.ml",
+                    "bs_array.ml"
+                ]
+            },
+            { "dir" : "test",
+              "files": [ 
+                         "bs_string_test.ml"
+                         ]
+                         ,
+              "bs-dependencies" : ["bs-mocha"]  
+            }
+        ]
+    }
+}
