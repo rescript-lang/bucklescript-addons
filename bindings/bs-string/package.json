@@ -1,9 +1,9 @@
 {
   "name": "bs-string",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "A minimal binding to mochajs for bucklescript",
   "scripts": {
-    "postinstall": "node ./scripts/install.js",
+    "postinstall": "bsb",
     "test" : "bsc -bs-package-name $npm_package_name -I src -bs-package-include bs-mocha -I test -bs-files test/*.ml && mocha test/*.js"
   },
   "repository": {

@@ -1,9 +1,9 @@
 {
   "name": "bs-promise",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Bindings to promises for BuckleScript",
   "scripts": {
-    "postinstall": "node ./scripts/install.js",
+    "postinstall": "bsb",
     "test": "node ./scripts/test.js"
   },
   "repository": {
@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/bloomberg/bucklescript-addons#readme",
   "dependencies": {
-    "bs-platform" : "0.9.3"
+    "bs-platform" : "^1.3.3"
   }
 }

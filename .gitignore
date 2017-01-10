@@ -11,4 +11,8 @@ node_modules
 .ninja_log
 *.mlast
 *.mliast
+.merlin
+bs/
+ocaml/
+
 build.ninja # we should not check in since it is OS dependent 

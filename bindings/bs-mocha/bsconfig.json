@@ -1,17 +1,14 @@
 {
     "name": "bs-mocha",
-    "version": "0.1.5",
-    "ocaml-config": {
-        "sources": [
-            {
-                "dir": "src",
-                "public" : "all",
-                "files": [ 
-                 "bs_mocha.mli"
-                 , "bs_mocha.ml"
-                 ]
-                 
-            }
+    "version": "0.1.6",
+    "sources": {
+        "dir": "src",
+        "public": "all",
+        "files": [
+            "bs_mocha.mli",
+            "bs_mocha.ml"
         ]
-    }
+    },
+    
+    "generate-merlin" : true
 }

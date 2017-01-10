@@ -1,0 +1,8 @@
+{
+    "name" : "bs-promise",
+    "sources": {
+        "dir" : "src",
+        "public": "all"
+    },
+    "generate-merlin" : true 
+}
