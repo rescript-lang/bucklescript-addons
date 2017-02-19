@@ -1,2 +1,4 @@
-*.cmj
-*.cmi
+*.cm*
+/node_modules*
+/lib/
+.merlin

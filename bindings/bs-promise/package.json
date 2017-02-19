@@ -4,6 +4,7 @@
   "description": "Bindings to promises for BuckleScript",
   "scripts": {
     "postinstall": "bsb",
+    "start": "bsb -make-world -w",
     "test": "node ./scripts/test.js"
   },
   "repository": {
