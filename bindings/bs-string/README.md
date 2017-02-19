@@ -2,5 +2,4 @@
 
 # Bindings to JS String for BuckleScript
 
-When its API is stabilized, we will move this core part into
-bs-platform package
+These bindings are obsolete. Replaced by the `Js.String`, `Js.Array` and `JS.Math` modules shipped with BuckleScript.
