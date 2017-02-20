@@ -34,65 +34,65 @@ let fail loc =
 
 let thenTest () =
   let p = resolve 4 in
-  p |> then_ (fun [@bs] x -> assert_bool (x = 4) __LOC__)
+  p |> then_ (fun x -> assert_bool (x = 4) __LOC__)
 
 let andThenTest () =
   let p = resolve 6 in
-  p |> andThen (fun [@bs] _ -> resolve (12))
-    |> then_ (fun [@bs] y -> assert_bool (y = 12) __LOC__)
+  p |> andThen (fun _ -> resolve (12))
+    |> then_ (fun y -> assert_bool (y = 12) __LOC__)
 
 let catchTest () =
   let p = reject "error" in
-  p |> then_ (fun [@bs] _ -> fail __LOC__)
-    |> catch (fun [@bs] error -> assert_bool (error = "error") __LOC__)
+  p |> then_ (fun _ -> fail __LOC__)
+    |> catch (fun error -> assert_bool (error = "error") __LOC__)
 
 let orResolvedTest () =
   let p = resolve 42 in
-  p |> or_ (fun [@bs] _ -> 22)
-    |> then_ (fun [@bs] value -> assert_bool (value = 42) __LOC__)
-    |> catch (fun [@bs] _ -> fail __LOC__)
+  p |> or_ (fun _ -> 22)
+    |> then_ (fun value -> assert_bool (value = 42) __LOC__)
+    |> catch (fun _ -> fail __LOC__)
 
 let orRejectedTest () =
   let p = reject "error" in
-  p |> or_ (fun [@bs] _ -> 22)
-    |> then_ (fun [@bs] value -> assert_bool (value = 22) __LOC__)
-    |> catch (fun [@bs] _ -> fail __LOC__)
+  p |> or_ (fun _ -> 22)
+    |> then_ (fun value -> assert_bool (value = 22) __LOC__)
+    |> catch (fun _ -> fail __LOC__)
 
 let orElseResolvedTest () =
   let p = resolve 42 in
-  p |> orElse (fun [@bs] _ -> resolve 22)
-    |> then_ (fun [@bs] value -> assert_bool (value = 42) __LOC__)
-    |> catch (fun [@bs] _ -> fail __LOC__)
+  p |> orElse (fun _ -> resolve 22)
+    |> then_ (fun value -> assert_bool (value = 42) __LOC__)
+    |> catch (fun _ -> fail __LOC__)
 
 let orElseRejectedResolveTest () =
   let p = reject "error" in
-  p |> orElse (fun [@bs] _ -> resolve 22)
-    |> then_ (fun [@bs] value -> assert_bool (value = 22) __LOC__)
-    |> catch (fun [@bs] _ -> fail __LOC__)
+  p |> orElse (fun _ -> resolve 22)
+    |> then_ (fun value -> assert_bool (value = 22) __LOC__)
+    |> catch (fun _ -> fail __LOC__)
 
 let orElseRejectedRejectTest () =
   let p = reject "error" in
-  p |> orElse (fun [@bs] _ -> reject "error 2")
-    |> then_ (fun [@bs] _ -> fail __LOC__)
-    |> catch (fun [@bs] error -> assert_bool (error = "error 2") __LOC__)
+  p |> orElse (fun _ -> reject "error 2")
+    |> then_ (fun _ -> fail __LOC__)
+    |> catch (fun error -> assert_bool (error = "error 2") __LOC__)
 
 let resolveTest () =
   let p1 = resolve 10 in
-  p1 |> then_ (fun [@bs] x -> assert_bool (x = 10) __LOC__)
+  p1 |> then_ (fun x -> assert_bool (x = 10) __LOC__)
 
 let rejectTest () =
   let p = reject "error" in
-  p |> catch (fun [@bs] error -> assert_bool (error = "error") __LOC__)
+  p |> catch (fun error -> assert_bool (error = "error") __LOC__)
 
 let thenCatchChainResolvedTest () =
   let p = resolve 20 in
-  p |> then_ (fun [@bs] value -> assert_bool (value = 20) __LOC__ )
-    |> catch (fun [@bs] _ -> fail __LOC__)
+  p |> then_ (fun value -> assert_bool (value = 20) __LOC__ )
+    |> catch (fun _ -> fail __LOC__)
 
 let thenCatchChainRejectedTest () =
   let p = reject "error" in
-  p |> then_ (fun [@bs] _ -> fail __LOC__)
-    |> catch (fun [@bs] error -> assert_bool (error = "error") __LOC__)
+  p |> then_ (fun _ -> fail __LOC__)
+    |> catch (fun error -> assert_bool (error = "error") __LOC__)
 
 let allResolvedTest () =
   let p1 = resolve 1 in
@@ -101,7 +101,7 @@ let allResolvedTest () =
   let promises = [| p1; p2; p3 |] in
   (all promises)
     |> then_
-      (fun [@bs] resolved ->
+      (fun resolved ->
         assert_bool (resolved.(0) = 1) __LOC__ ;
         assert_bool (resolved.(1) = 2) __LOC__ ;
         assert_bool (resolved.(2) = 3) __LOC__)
@@ -112,8 +112,8 @@ let allRejectTest () =
   let p3 = reject "error" in
   let promises = [| p1; p2; p3 |] in
   (all promises)
-    |> then_ (fun [@bs] _ -> fail __LOC__)
-    |> catch (fun [@bs] error -> assert_bool (error = "error") __LOC__)
+    |> then_ (fun _ -> fail __LOC__)
+    |> catch (fun error -> assert_bool (error = "error") __LOC__)
 
 let raceTest () =
   let p1 = resolve "first" in
@@ -121,17 +121,17 @@ let raceTest () =
   let p3 = resolve "third" in
   let promises = [| p1; p2; p3 |] in
   (race promises)
-    |> then_ (fun [@bs] resolved -> assert_bool (resolved = "first") __LOC__)
-    |> catch (fun [@bs] _ -> fail __LOC__)
+    |> then_ (fun resolved -> assert_bool (resolved = "first") __LOC__)
+    |> catch (fun _ -> fail __LOC__)
 
 let createPromiseRejectTest () =
-  make (fun [@bs] _ reject -> reject "error" [@bs])
-    |> catch (fun [@bs] error -> assert_bool (error = "error") __LOC__)
+  make (fun _ reject -> reject "error")
+    |> catch (fun error -> assert_bool (error = "error") __LOC__)
 
 let createPromiseFulfillTest () =
-  make (fun [@bs] resolve _ -> resolve "success" [@bs])
-    |> then_ (fun [@bs] resolved -> assert_bool (resolved = "success") __LOC__)
-    |> catch (fun [@bs] _ -> fail __LOC__)
+  make (fun resolve _ -> resolve "success")
+    |> then_ (fun resolved -> assert_bool (resolved = "success") __LOC__)
+    |> catch (fun _ -> fail __LOC__)
 
 let () =
   ignore @@ thenTest ();

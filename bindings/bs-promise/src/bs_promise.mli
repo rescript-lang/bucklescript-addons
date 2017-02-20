@@ -27,7 +27,7 @@
    'rej - type the promise will be rejected with *)
 type ('res, 'rej) t
 
-external make : (('res -> unit [@bs]) -> ('rej -> unit [@bs]) -> unit [@bs]) -> ('res, 'rej) t = "Promise" [@@bs.new]
+external make : (('res -> unit) -> ('rej -> unit) -> unit) -> ('res, 'rej) t = "Promise" [@@bs.new]
 external create : (('res -> unit [@bs]) -> ('rej -> unit [@bs]) -> unit [@bs]) -> ('res, 'rej) t = "Promise" [@@bs.new]
 [@@ocaml.deprecated "Please use `make` instead"]
 
@@ -36,19 +36,19 @@ external reject : 'rej -> ('a, 'rej) t = "Promise.reject" [@@bs.val]
 external all : ('res, 'rej) t array -> ('res array, 'rej) t = "Promise.all" [@@bs.val]
 external race : ('res, 'rej) t array -> ('res, 'rej) t = "Promise.race" [@@bs.val]
 
-external then_ : ('res -> 'a [@bs]) -> ('a, 'b) t = "then" [@@bs.send.pipe: ('res, 'rej') t]
+external then_ : ('res -> 'a) -> ('a, 'b) t = "then" [@@bs.send.pipe: ('res, 'rej') t]
 external thenValue : ('res, 'rej) t -> ('res -> 'a [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
 [@@ocaml.deprecated "Please use `then_` instead"]
 external (>>|): ('res, 'rej) t -> ('res -> 'a [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
 [@@ocaml.deprecated "Obscure operators are discouraged. Please use `then_` instead"]
-external andThen : ('res -> ('a, 'b) t [@bs]) -> ('a, 'b) t = "then" [@@bs.send.pipe: ('res, 'rej) t]
+external andThen : ('res -> ('a, 'b) t) -> ('a, 'b) t = "then" [@@bs.send.pipe: ('res, 'rej) t]
 external (>>=) : ('res, 'rej) t -> ('res -> ('a, 'b) t [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
 [@@ocaml.deprecated "Obscure operators are discouraged. Please use `andThen` instead"]
 external thenWithError : ('res, 'rej) t -> ('res -> 'a [@bs]) -> ('rej -> 'b [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
 [@@ocaml.deprecated "Obscure operators are discouraged. Please use a combination of `then_` and `catch` instead"]
 
-external catch : ('rej -> unit [@bs]) -> ('a, 'b) t = "catch" [@@bs.send.pipe: ('res, 'rej) t]
+external catch : ('rej -> unit) -> ('a, 'b) t = "catch" [@@bs.send.pipe: ('res, 'rej) t]
 external (>>?) : ('res, 'rej) t -> ('rej -> 'a [@bs]) -> ('a, 'b) t = "catch" [@@bs.send]
 [@@ocaml.deprecated "Obscure operators are discouraged. Please use `or_` instead"]
-external or_ : ('rej -> 'a [@bs]) -> ('a, 'b) t = "catch" [@@bs.send.pipe: ('res, 'rej) t]
-external orElse : ('rej -> ('a, 'b) t [@bs]) -> ('a, 'b) t = "catch" [@@bs.send.pipe: ('res, 'rej) t]
+external or_ : ('rej -> 'a) -> ('a, 'b) t = "catch" [@@bs.send.pipe: ('res, 'rej) t]
+external orElse : ('rej -> ('a, 'b) t) -> ('a, 'b) t = "catch" [@@bs.send.pipe: ('res, 'rej) t]
