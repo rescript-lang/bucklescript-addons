@@ -1,5 +1,5 @@
 (* Copyright (C) 2015-2016 Bloomberg Finance L.P.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -17,7 +17,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
@@ -27,37 +27,28 @@
    'rej - type the promise will be rejected with *)
 type ('res, 'rej) t
 
+external make : (('res -> unit) -> ('rej -> unit) -> unit) -> ('res, 'rej) t = "Promise" [@@bs.new]
+external create : (('res -> unit [@bs]) -> ('rej -> unit [@bs]) -> unit [@bs]) -> ('res, 'rej) t = "Promise" [@@bs.new]
+[@@ocaml.deprecated "Please use `make` instead"]
 
-(* then *)
-external then_ : ('res, 'rej) t -> ('res -> ('a, 'b) t [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
-external (>>=) : ('res, 'rej) t -> ('res -> ('a, 'b) t [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
-
-external thenValue : ('res, 'rej) t -> ('res -> 'a [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
-external (>>|): ('res, 'rej) t -> ('res -> 'a [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
-
-external thenWithError : ('res, 'rej) t -> ('res -> 'a [@bs]) -> ('rej -> 'b [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
-
-
-(* catch *)
-external catch :  ('res, 'rej) t -> ('rej -> 'a [@bs]) -> ('a, 'b) t = "catch" [@@bs.send]
-external (>>?) :  ('res, 'rej) t -> ('rej -> 'a [@bs]) -> ('a, 'b) t = "catch" [@@bs.send]
-
-
-(* Promise.resolve *)
 external resolve : 'res -> ('res, 'a) t = "Promise.resolve" [@@bs.val]
-
-
-(* Promise.reject *)
 external reject : 'rej -> ('a, 'rej) t = "Promise.reject" [@@bs.val]
-
-
-(* Promise.all *)
 external all : ('res, 'rej) t array -> ('res array, 'rej) t = "Promise.all" [@@bs.val]
-
-
-(* Promise.race *)
 external race : ('res, 'rej) t array -> ('res, 'rej) t = "Promise.race" [@@bs.val]
 
+external then_ : ('res -> 'a) -> ('a, 'b) t = "then" [@@bs.send.pipe: ('res, 'rej') t]
+external thenValue : ('res, 'rej) t -> ('res -> 'a [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
+[@@ocaml.deprecated "Please use `then_` instead"]
+external (>>|): ('res, 'rej) t -> ('res -> 'a [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
+[@@ocaml.deprecated "Obscure operators are discouraged. Please use `then_` instead"]
+external andThen : ('res -> ('a, 'b) t) -> ('a, 'b) t = "then" [@@bs.send.pipe: ('res, 'rej) t]
+external (>>=) : ('res, 'rej) t -> ('res -> ('a, 'b) t [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
+[@@ocaml.deprecated "Obscure operators are discouraged. Please use `andThen` instead"]
+external thenWithError : ('res, 'rej) t -> ('res -> 'a [@bs]) -> ('rej -> 'b [@bs]) -> ('a, 'b) t = "then" [@@bs.send]
+[@@ocaml.deprecated "Obscure operators are discouraged. Please use a combination of `then_` and `catch` instead"]
 
-(* new Promise *)
-external create : (('res -> unit [@bs]) -> ('rej -> unit [@bs]) -> unit [@bs]) -> ('res, 'rej) t = "Promise" [@@bs.new]
+external catch : ('rej -> unit) -> ('a, 'b) t = "catch" [@@bs.send.pipe: ('res, 'rej) t]
+external (>>?) : ('res, 'rej) t -> ('rej -> 'a [@bs]) -> ('a, 'b) t = "catch" [@@bs.send]
+[@@ocaml.deprecated "Obscure operators are discouraged. Please use `or_` instead"]
+external or_ : ('rej -> 'a) -> ('a, 'b) t = "catch" [@@bs.send.pipe: ('res, 'rej) t]
+external orElse : ('rej -> ('a, 'b) t) -> ('a, 'b) t = "catch" [@@bs.send.pipe: ('res, 'rej) t]
