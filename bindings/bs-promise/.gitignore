@@ -1,4 +1,0 @@
-*.cm*
-/node_modules*
-/lib/
-.merlin
