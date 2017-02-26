@@ -23,61 +23,77 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
+external describe : string -> (unit -> unit[@bs]) -> unit = "describe"
+    [@@bs.val]
 
-
-external describe : string -> (unit -> unit[@bs]) -> unit = 
-  "" [@@bs.val]
-
-external it : string -> (unit -> unit [@bs]) -> unit = 
-  "" [@@bs.val]
+external it : string -> (unit -> unit) -> unit = "it"
+    [@@bs.val]
 
 external eq : 'a -> 'a -> unit = "deepEqual"
+    [@@bs.val]
     [@@bs.module "assert"]
 
 external neq : 'a -> 'a -> unit = "notDeepEqual"
+    [@@bs.val]
+    [@@bs.module "assert"]
+
+external ok : Js.boolean -> unit = "ok"
+    [@@bs.val]
+    [@@bs.module "assert"]
+
+external fail : 'a -> 'a -> string Js.undefined -> string -> unit = "fail"
+    [@@bs.val]
     [@@bs.module "assert"]
 
 
-(* external dump : 'a array -> unit = "console.log"  *)
-(*     [@@bs.val]  *)
-(*     [@@bs.splice] *)
+external dump : 'a array -> unit = "console.log" [@@bs.val ] [@@bs.splice]
+external throws : (unit -> unit) -> unit = "throws" [@@bs.val] [@@bs.module "assert"]
+(** There is a problem --
+    it does not return [unit ]
+ *)
 
-external throws : (unit -> unit [@bs]) 
-  -> unit = ""  [@@bs.module "assert"]
-
-let assert_equal = eq 
+let assert_equal = eq
 let assert_notequal = neq
+let assert_ok = fun a -> ok (Js.Boolean.to_js_boolean a)
+let assert_fail = fun msg -> fail () () (Js.Undefined.return msg) ""
 (* assert -- raises an AssertionError which mocha handls better
 *)
-let from_suites name (suite :  (string * (unit ->  unit [@bs])) list) = 
-  describe name (fun [@bs]() -> 
-      List.iter (fun (name, code) -> it name code) suite)
+let from_suites name (suite :  (string * ('a -> unit)) list) =
+    describe name (fun [@bs] () ->
+        List.iter (fun (name, code) -> it name code) suite)
 
-type eq = 
-  | Eq :  'a *'a  ->  eq
-  | Neq : 'a * 'a ->  eq
-  | Approx : float * float ->  eq  
-  | ThrowAny : (unit -> unit [@bs]) ->  eq
+type eq =
+  | Eq :  'a *'a  -> eq
+  | Neq : 'a * 'a -> eq
+  | Ok : bool -> eq
+  | Approx : float * float -> eq
+  | ApproxThreshold : float * float * float -> eq
+  | ThrowAny : (unit -> unit) -> eq
+  | Fail : unit -> eq
+  | FailWith : string -> eq
   (* TODO: | Exception : exn -> (unit -> unit) -> _ eq  *)
 
-type  pair_suites = (string * (unit ->  eq [@bs])) list
+type  pair_suites = (string * (unit ->  eq)) list
 
-let close_enough x y = 
-  abs_float (x -. y) < (* epsilon_float *) 0.0000001
+let close_enough ?(threshold=0.0000001 (* epsilon_float *)) a b =
+  abs_float (a -. b) < threshold
 
-let from_pair_suites name (suites :  pair_suites) = 
-  describe name (fun [@bs] () -> 
-      suites |> 
-      List.iter (fun (name, code) -> 
-          it name (fun [@bs] () -> 
-              match code () [@bs] with 
-              | Eq(a,b) -> assert_equal a b 
-              | Neq(a,b) -> assert_notequal a b 
-              | Approx(a,b) 
-                -> 
-                assert (close_enough a b)
-              | ThrowAny fn -> throws fn 
+let from_pair_suites name (suites :  pair_suites) =
+  describe name (fun [@bs] () ->
+      suites |>
+      List.iter (fun (name, code) ->
+          it name (fun _ ->
+              match code () with
+              | Eq(a,b) -> assert_equal a b
+              | Neq(a,b) -> assert_notequal a b
+              | Ok(a) -> assert_ok a
+              | Approx(a, b) ->
+                if not (close_enough a b) then assert_equal a b (* assert_equal gives better ouput *)
+              | ApproxThreshold(t, a, b) ->
+                if not (close_enough ~threshold:t a b) then assert_equal a b (* assert_equal gives better ouput *)
+              | ThrowAny fn -> throws fn
+              | Fail _ -> assert_fail "failed"
+              | FailWith msg -> assert_fail msg
             )
-        ) 
-    ) 
-
+        )
+    )

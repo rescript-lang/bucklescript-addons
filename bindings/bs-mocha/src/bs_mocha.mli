@@ -23,15 +23,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
 
-type eq = 
+type  eq =
   | Eq :  'a *'a  ->  eq
   | Neq : 'a * 'a ->  eq
-  | Approx : float * float ->  eq  
-  | ThrowAny : (unit -> unit [@bs]) ->  eq
+  | Ok : bool -> eq
+  | Approx : float * float ->  eq
+  | ApproxThreshold : float * float * float ->  eq
+  | ThrowAny : (unit -> unit) -> eq
+  | Fail : unit -> eq
+  | FailWith : string -> eq
+type  pair_suites = (string * (unit ->  eq)) list
 
-type  pair_suites = (string * (unit ->  eq [@bs])) list
-
-
-val from_suites : string -> (string * (unit -> unit[@bs])) list -> unit
-
+val from_suites : string -> (string * (unit -> unit)) list -> unit
 val from_pair_suites : string ->  pair_suites -> unit

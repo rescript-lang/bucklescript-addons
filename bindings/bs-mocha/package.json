@@ -3,7 +3,8 @@
   "version": "0.1.6",
   "description": "A minimal binding to mochajs for bucklescript",
   "scripts": {
-    "postinstall": "bsb"
+    "postinstall": "bsb",
+    "start": "bsb -make-world -w"
   },
   "repository": {
     "type": "git",
