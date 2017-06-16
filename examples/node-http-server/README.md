@@ -1,5 +1,5 @@
 
-# [BuckleScript](http://bloomberg.github.io/bucklescript/) Demo
+# [BuckleScript](http://bucklescript.github.io/bucklescript/) Demo
 
 
 
