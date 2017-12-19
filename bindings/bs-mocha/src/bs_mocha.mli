@@ -22,17 +22,45 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
+external describe : string -> (unit -> unit [@bs]) -> unit = "describe"
+    [@@bs.val]
 
-type  eq =
-  | Eq :  'a *'a  ->  eq
-  | Neq : 'a * 'a ->  eq
+external it : string -> (unit -> unit) -> unit = "it"
+    [@@bs.val]
+
+external eq : 'a -> 'a -> unit = "deepEqual"
+    [@@bs.val]
+    [@@bs.module "assert"]
+
+external neq : 'a -> 'a -> unit = "notDeepEqual"
+    [@@bs.val]
+    [@@bs.module "assert"]
+
+external ok : Js.boolean -> unit = "ok"
+    [@@bs.val]
+    [@@bs.module "assert"]
+
+external fail : 'a -> 'a -> string Js.undefined -> string -> unit = "fail"
+    [@@bs.val]
+    [@@bs.module "assert"]
+
+external dump : 'a array -> unit = "console.log" [@@bs.val ] [@@bs.splice]
+external throws : (unit -> unit) -> unit = "throws" [@@bs.val] [@@bs.module "assert"]
+
+val assert_equal : 'a -> 'a -> unit
+val assert_notequal : 'a -> 'a -> unit
+val assert_ok : bool -> unit
+val assert_fail : string -> unit
+val from_suites : string -> (string * (unit -> unit)) list -> unit
+type eq =
+    Eq : 'a * 'a -> eq
+  | Neq : 'a * 'a -> eq
   | Ok : bool -> eq
-  | Approx : float * float ->  eq
-  | ApproxThreshold : float * float * float ->  eq
+  | Approx : float * float -> eq
+  | ApproxThreshold : float * float * float -> eq
   | ThrowAny : (unit -> unit) -> eq
   | Fail : unit -> eq
   | FailWith : string -> eq
-type  pair_suites = (string * (unit ->  eq)) list
-
-val from_suites : string -> (string * (unit -> unit)) list -> unit
-val from_pair_suites : string ->  pair_suites -> unit
+type pair_suites = (string * (unit -> eq)) list
+val close_enough : ?threshold:float -> float -> float -> bool
+val from_pair_suites : string -> pair_suites -> unit
