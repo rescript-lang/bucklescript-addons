@@ -23,7 +23,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 
-external describe : string -> (unit -> unit[@bs]) -> unit = "describe"
+external describe : string -> (unit -> unit) -> unit = "describe"
     [@@bs.val]
 
 external it : string -> (unit -> unit) -> unit = "it"
@@ -59,7 +59,7 @@ let assert_fail = fun msg -> fail () () (Js.Undefined.return msg) ""
 (* assert -- raises an AssertionError which mocha handls better
 *)
 let from_suites name (suite :  (string * ('a -> unit)) list) =
-    describe name (fun [@bs] () ->
+    describe name (fun () ->
         List.iter (fun (name, code) -> it name code) suite)
 
 type eq =
@@ -79,7 +79,7 @@ let close_enough ?(threshold=0.0000001 (* epsilon_float *)) a b =
   abs_float (a -. b) < threshold
 
 let from_pair_suites name (suites :  pair_suites) =
-  describe name (fun [@bs] () ->
+  describe name (fun () ->
       suites |>
       List.iter (fun (name, code) ->
           it name (fun _ ->
